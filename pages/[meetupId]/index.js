@@ -21,6 +21,8 @@ function MeetupDetails(props){
 
 //pregenerated all the dynamic value (meetupId) --> is used for dynamic pages
 //every possible meetId in a path should be written in the params object (jadi tau mau dibawa kemana pagenya)
+// dia nentuin value apa yg diperluin buat getstaticprops cari di proses build
+// getStaticPaths return all the available id
 export async function getStaticPaths(){
     const client = await MongoClient.connect('mongodb+srv://adell:curlyhair@cluster0.qsr35ml.mongodb.net/meetUps?retryWrites=true&w=majority');
     const db = client.db()
@@ -45,8 +47,9 @@ export async function getStaticPaths(){
 //allows to fetch data and return in props
 //run during build process in terminal
 export async function getStaticProps(context){
-    const meetupId = context.params.meetupId // for getting the meetupId (from getStaticPaths)
+    const meetupId = context.params.meetupId // for getting the meetupId (from getStaticPaths) dengan value yg ada di url
 
+    //ga akses ke new-meetup karna dia kan pas proses build, kalo fetch ke link lain jadi redundant
     const client = await MongoClient.connect('mongodb+srv://adell:curlyhair@cluster0.qsr35ml.mongodb.net/meetUps?retryWrites=true&w=majority');
     const db = client.db()
 
